@@ -52,6 +52,8 @@
 
 let turns = 0;
 let currentPlayer = 'X';
+let playerX= 0;
+let playerO= 0;
 
 
 const board = [
@@ -86,6 +88,7 @@ const winner = function ( player ) {
      ){
 
     // console.log("Winner: player 1");
+
     return true;
 
   }
@@ -113,12 +116,32 @@ const winner = function ( player ) {
 
 
 
+const randRange = function (max) {
+  return parseInt( Math.random() * max );
+}
+
+
+
+
+// change color
+
+
+
+
+// ============================JQuery=====================
+
 const resetGame = function () {
+  // reset turns to 0
   turns = 0;
+
+  // reset board to null
   for (let i=0; i<board.length; i++) {
     board[i] = null;
   }
-}
+
+  //clear the webpage
+  $(".checkbox").text("")
+};
 
 
 
@@ -148,11 +171,33 @@ $(".checkbox").on("click", function () {
 
   const isWinner = winner( currentPlayer );
 
+
+  const countScore = function() {
+    if (currentPlayer === 'X') {
+      playerX++
+      console.log(`player ${currentPlayer} won`);
+      console.log(`${currentPlayer}`+playerX);
+    } else{
+      playerO++
+      console.log(`player ${currentPlayer} won`);
+      console.log(`${currentPlayer}`+playerO);
+    }
+
+    $('#message').html(` player ${currentPlayer} won `);
+    $('#message').show();
+
+
+  }
+
   if( isWinner ){
-    alert(`${currentPlayer} won`);
+    countScore();
+    // let $div = $('<div></div>')
+    // $div.html(`LALALALALALA`)
+    // $('#container').append($div)
     resetGame();
   } else if (turns===8) {
-    alert("draw.")   //$('#message').html(`${currentPlayer} won`).fadeIn();
+    alert("draw.")
+    resetGame();     //$('#message').html(`${currentPlayer} won`).fadeIn();
   }
 
 
@@ -166,3 +211,12 @@ $(".checkbox").on("click", function () {
 
 
 });
+
+
+$(".checkbox").each(function () {
+  const r = randRange(255);
+  const g = randRange(255);
+  const b = randRange(255);
+  const color = `rgba(${r},${g},${b},0.5)`
+  $(this).css("backgroundColor", color);
+})

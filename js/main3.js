@@ -75,17 +75,33 @@ const game = function (board) {
     for (let j=0; j<n; j++) {
       if (board2D[i][j]===“X”) {
         numX++
+        result = true;
+        return;
+
       } else if (board2D[i][j]===“O”){
         numO++
+        result = true;
+        return;
       }
       // check columns
       if (board2D[j][i]===“X”) {
         numX++
+        result = true;
+        return;
+
       } else if(board2D[j][i]===“X”) {
         numO++
+        result = true;
+        return;
       }
     } // for j
   } // for i
+
+
+  //check diagonal
+  for(i=0; i<n; i++) {
+    board[i][i]
+  }
 
   if (numX===3 || numO ===3) {
     result = true;
