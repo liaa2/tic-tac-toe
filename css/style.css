@@ -12,15 +12,61 @@
 @import url('https://fonts.googleapis.com/css?family=Black+Han+Sans');
 
 * {
-  margin: 0 auto;
+  margin: 0 auto 30px;
   border: 0;
   padding: 0;
   text-align: center;
 }
 
+body {
+  background: url("https://media.giphy.com/media/3PgX9RQZEyNsA/giphy.gif");
+  /* background-color: blue; */
+  background-size: contain;
+}
+
 h1 {
   font-family: 'Black Han Sans', sans-serif;
   font-size: 100px;
+  color: white;
+  margin-top: 50px;
+}
+
+#player1, #player2 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 80px;
+  color: black;
+  animation: blink 0.3s alternate infinite;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+
+#player1 {
+  float: left;
+  margin: 400px 0 0 100px;
+}
+
+#player2 {
+  float: right;
+  margin: 400px 100px 0 0;
+}
+
+#player1 > div, #player2 > div {
+  font-size: 100pt;
+}
+
+.yesButton, .noButton {
+  background: inherit;
+  font-size: 50px;
+  font-family: 'Black Han Sans', sans-serif;
+  margin-bottom: 0;
 }
 
 #container {
@@ -28,22 +74,26 @@ h1 {
   position: relative;
   font-size: 250px;
   margin: 50px auto 50px;
+  color: white;
   /* table-layout: fixed; */
   /* border-collapse: collapse; */
 }
 
-#message{
+#message, #draw {
   display: none;
   /* display: block; */
   position: absolute;
   width: 50%;
-  height: 40%;
+  height: 50%;
   top: 20vh;
-  border: 10px solid pink;
+  /* border: 10px solid pink; */
   margin: 0 auto;
   left: 0;
   right: 0;
-  background-color: green;
+  background-color: rgba(196, 240, 240,0.7);
+  font-family: 'Black Han Sans', sans-serif;
+  text-align: center;
+  font-size: 100px;
 }
 
 td {
@@ -65,10 +115,10 @@ td {
   }
 }
 
-
+/*
 td:active {
   background-color: yellow;
-}
+} */
 
 table {
   width: 900px;
@@ -79,6 +129,8 @@ table {
   margin: 0 auto;
   table-layout: fixed;
 };
+
+
 
 
 

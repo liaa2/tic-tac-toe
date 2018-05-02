@@ -64,7 +64,7 @@ board[ 4 ]
 
 board2D[ 2 ][ 2 ]
 
-const game = function (board) {
+const game = function (board2D) {
   let n = 3;
   let numX = 0;
   let numO = 0;
@@ -73,26 +73,16 @@ const game = function (board) {
   // check rows
   for (let i=0; i<n; i++) {
     for (let j=0; j<n; j++) {
-      if (board2D[i][j]===“X”) {
+      if (board2D[i][j]==='X') {
         numX++
-        result = true;
-        return;
-
-      } else if (board2D[i][j]===“O”){
+      } else if (board2D[i][j]==='O'){
         numO++
-        result = true;
-        return;
       }
       // check columns
-      if (board2D[j][i]===“X”) {
+      if (board2D[j][i]==='X') {
         numX++
-        result = true;
-        return;
-
-      } else if(board2D[j][i]===“X”) {
+      } else if(board2D[j][i]==='O') {
         numO++
-        result = true;
-        return;
       }
     } // for j
   } // for i
@@ -100,22 +90,35 @@ const game = function (board) {
 
   //check diagonal
   for(i=0; i<n; i++) {
-    board[i][i]
+    if(board[i][i]==="X"){
+      numX++
+    } else if(board[i][i]==="O"){
+      numO++
+    }
   }
 
-  if (numX===3 || numO ===3) {
-    result = true;
+  // check antiDiagonal
+  for (let i=0; i<n; i++) {
+    for (let j=0; j<n; j++) {
+      if (board2D[i][n-1-j]==='X') {
+        numX++
+      } else if (board2D[i][n-1-j]==='O'){
+        numO++
+      }
+    } // for j
+  } // for i
+
+  if (numX===3) {
+    consol.log("Winner is X.")
+  } else if (num===3) {
+    consol.log("Winner is O.")
   }
-
-
-
-
-
-  //check diagonal
-
-
-
-
-  //check antiDiagonal
-
 }
+
+
+
+
+// ====================JQuery code======================
+$(document).ready(function () {
+  console.log('JQuery is ready - main3.js');
+})

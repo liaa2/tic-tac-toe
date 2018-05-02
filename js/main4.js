@@ -52,8 +52,8 @@
 
 let turns = 0;
 let currentPlayer = 'X';
-let playerX= 0;
-let playerO= 0;
+let playerXScore= 0;
+let playerOScore= 0;
 
 
 const board = [
@@ -116,107 +116,117 @@ const winner = function ( player ) {
 
 
 
-const randRange = function (max) {
-  return parseInt( Math.random() * max );
-}
+// ============================JQuery/Gui code=====================
 
+$(document).ready(function(){
+  console.log('JQuery is ready');
 
+  const resetGame = function () {
+    // hide message board
+    $('#message,#draw').hide();
+    // reset turns to 0
+    turns = 0;
 
+    // reset player to X
+    currentPlayer = 'X';
 
-// change color
-
-
-
-
-// ============================JQuery=====================
-
-const resetGame = function () {
-  // reset turns to 0
-  turns = 0;
-
-  // reset board to null
-  for (let i=0; i<board.length; i++) {
-    board[i] = null;
-  }
-
-  //clear the webpage
-  $(".checkbox").text("")
-};
-
-
-
-
-
-$(".checkbox").on("click", function () {
-
-  const index = $(this).attr('position');
-
-   if (board[index] !== null) {
-     console.log("Invalid click");
-     return;
-   }
-
-  // if (turns%2===0) {
-  //   $(this).text("X");
-  //   board[ index ] = "X";
-  // } else {
-  //   $(this).text("O");
-  //   board[ index ] = "O";
-  // }
-
-  $(this).text( currentPlayer );
-  board[ index ] =  currentPlayer;
-
-  // console.log(board);
-
-  const isWinner = winner( currentPlayer );
-
-
-  const countScore = function() {
-    if (currentPlayer === 'X') {
-      playerX++
-      console.log(`player ${currentPlayer} won`);
-      console.log(`${currentPlayer}`+playerX);
-    } else{
-      playerO++
-      console.log(`player ${currentPlayer} won`);
-      console.log(`${currentPlayer}`+playerO);
+    // reset board to null
+    for (let i=0; i<board.length; i++) {
+      board[i] = null;
     }
 
-    $('#message').html(` player ${currentPlayer} won `);
-    $('#message').show();
+    //clear the webpage
+    $(".checkbox").text("");
+  };
 
 
+  const draw = function () {
+    $('#draw > div').html(`Oops, draw!<br>Play again?`);
+    $('#draw').show('slow');
   }
 
-  if( isWinner ){
-    countScore();
-    // let $div = $('<div></div>')
-    // $div.html(`LALALALALALA`)
-    // $('#container').append($div)
+
+
+  $(".checkbox").on("click", function () {
+
+    const index = $(this).attr('position');
+
+     if (board[index] !== null) {
+       console.log("Invalid click");
+       return;
+     }
+
+    $(this).text( currentPlayer );
+    board[ index ] =  currentPlayer;
+
+    // console.log(board);
+
+    const isWinner = winner( currentPlayer );
+
+
+    const countScore = function() {
+      if (currentPlayer === 'X') {
+        playerXScore++;
+        $('#player1 > div').text(playerXScore);
+        // console.log(`player ${currentPlayer} won`);
+        // console.log(`${currentPlayer}`+playerXScore);
+      } else{
+        playerOScore++;
+        $('#player2 > div').text(playerOScore);
+        // console.log(`player ${currentPlayer} won`);
+        // console.log(`${currentPlayer}`+playerOScore);
+      }
+
+      // $('#message').html(` player ${currentPlayer} won! <br> Play again?<br><button id="yesButton">yes</button><br><button id="noButton">no</button>`);
+      $('#message > div').html(` player ${currentPlayer} won!<br>Play again?`);
+      // $('#yesButton, #noButton').css({'background': 'inherit', 'fontSize': '50px','fontFamily': 'Black Han Sans'})
+      $('#message').show('slow');
+    };
+
+    if( isWinner ){
+      countScore();
+      // resetGame();
+    } else if (turns===8) {
+      draw();
+      // resetGame();     //$('#message').html(`${currentPlayer} won`).fadeIn();
+    };
+
+
+    if ( turns%2 !== 0 ) {
+      currentPlayer = 'X';  // Odd turns belong to X
+    } else {
+      currentPlayer = 'O';
+    }
+
+    turns++;
+  });
+
+
+  const randRange = function (max) {
+    return parseInt( Math.random() * max);
+  }
+
+
+  $(".checkbox").each(function () {
+    const r = randRange(255);
+    const g = randRange(255);
+    const b = randRange(255);
+    const color = `rgba(${r},${g},${b},0.7)`
+    $(this).css("backgroundColor", color);
+  })
+
+  // console.log("$('#yesButton') results:", $('#yesButton').length);
+  $('.yesButton').on('click', function(){
+    // debugger;
     resetGame();
-  } else if (turns===8) {
-    alert("draw.")
-    resetGame();     //$('#message').html(`${currentPlayer} won`).fadeIn();
-  }
+    console.log('reset!');
+  })
 
 
-  if ( turns%2 !== 0 ) {
-    currentPlayer = 'X';  // Odd turns belong to X
-  } else {
-    currentPlayer = 'O';
-  }
-
-  turns++;
-
-
+  $('.noButton').on('click', function(){
+    $('#message > div, #draw > div').html(`Alright, see you next time!`);
+    setTimeout(function(){
+    window.close();
+    },2000);
+  })
 });
-
-
-$(".checkbox").each(function () {
-  const r = randRange(255);
-  const g = randRange(255);
-  const b = randRange(255);
-  const color = `rgba(${r},${g},${b},0.5)`
-  $(this).css("backgroundColor", color);
-})
