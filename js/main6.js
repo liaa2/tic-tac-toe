@@ -66,193 +66,227 @@ board2D[ 2 ][ 2 ]
 // console.log(board2D[ 2 ][ 2 ]);
 
 
+let n = 3;
 let currentPlayer = "O";
 let turns = 0;
-// let result = false;
+// console.log(currentPlayer.repeat(n));
 
 const winner = function (board2D) {
-  // console.log(n);
-
-  let n = 3;
-  // let numX = 0;
-  // let numO = 0;
-
-
-  //create objects to store winning numbers, need separate key for different direction.
-  // if use the  same numX or numO, the total number would keep incrementing no matter which direction.
-  const count = {
-    X : {
-      rows: 0,
-      cols: 0,
-      diag: 0,
-      antidiag: 0
-    },
-    O: {
-      rows: 0,
-      cols: 0,
-      diag: 0,
-      antidiag: 0
-    }
-  };
-
 
   // check rows
-  for (let i=0; i<n; i++) {
+  for (let i = 0; i < n; i++) {
     // check row win
-    if( board2D[i].join('') === 'OOO' ){
-      console.log('WIN FOR o!!!!');
+    if ( board2D[i].join('') === 'OOO' ){
+      console.log('WIN FOR O!!!!');
+
+      // else if === 'XXX'
+    } else if (board2D[i].join('') === 'XXX') {
+      console.log('WIN FOR X!!!!');
     }
-    // else if === 'XXX'
 
     // check col win
-    console.log(`col ${i}:`, board2D[0][i] + board2D[1][i] + board2D[2][i]);
-
-
-    // check diag wins?
-
-    for (let j=0; j<n; j++) {
-      // set a variable to store coordinate
-      const rowSquare = board2D[i][j];
-
-
-      // Initially, if (board2D[i][j]==='X') else if (board2D[i][j]==='O') -> count.X.rows ++ or count.O.rows ++
-      // make it shorten, if (rowsquare ==='X') else if (rowsquare ==='O') -> count.X.rows ++ or count.O.rows ++
-      // make it shorten, if (rowsquare !== null) - > count.[rowsquare].rows ++
-      // make it shorten, if (rowsquare === true) - > count.[rowsquare].rows ++
-      // make it shorten, see below:
-      if( rowSquare ){
-        count[ rowSquare ].rows++;
-        console.log(`Found ${rowSquare} at ${i},${j}, count=${count[ rowSquare ].rows}`);
-        console.log(count);
-      }
-
-
-      // check columns
-      const colSquare = board2D[j][i];
-      console.log(colSquare);
-      if ( colSquare ) {
-        count[ colSquare ].cols++
-        // console.log(count[ colSquare ].cols);
-        // if (count[ colSquare ].cols===3) {
-        //   console.log(`${colSquare}: ${count[ colSquare ].cols}, col win.`);
-        //   return true;
-        // }
-      }
-    } // for j
-
-    // end of row check
-    if (count.X.rows===3) {
-      console.log(`X wins row ${i}`);
-      return true;
-    } else if (count.O.rows===3) {
-      console.log(`O wins row ${i}`);
-      return true;
-    } else {
-      count.X.rows = 0;
-      count.O.rows = 0;
+    let columns = board2D[0][i] + board2D[1][i] + board2D[2][i];
+    // console.log(columns);
+    if (board2D[i].join('') === 'OOO') {
+      console.log('WIN FOR O!!!!');
+    } else if (board2D[i].join('') === 'XXX') {
+      console.log('WIN FOR X!!!!');
     }
+    // console.log(`col ${i}:`, board2D[0][i] + board2D[1][i] + board2D[2][i]);
+  }
 
-    // end of col check
-    if (count.X.cols===3) {
-      console.log(`X wins col ${i}`);
-      return true;
-    } else if (count.O.cols===3) {
-      console.log(`O wins col ${i}`);
-      return true;
-    } else {
-      count.X.cols = 0;
-      count.O.cols = 0;
+  let diag = [];
+  let antiDiag = [];
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+
+      if ( i === j ) {
+        diag.push(board2D[i][j]);
+      }
+      if ( i + j === n-1 ) {
+        antiDiag.push(board2D[i][j]);
+      }
     }
+  }
+  // console.log(diag);
+  // console.log(antiDiag);
+
+  // check diag wins
+  if (diag.join('') === 'OOO') {
+    console.log('WIN FOR O!!!!');
+  } else if (diag.join('') === 'XXX') {
+    console.log('WIN FOR O!!!!');
+  }
+
+  //check anti-diagonal wins
+  if (antiDiag.join('') === 'OOO') {
+    console.log('WIN FOR O!!!!');
+  } else if (antiDiag.join('') === 'XXX') {
+    console.log('WIN FOR O!!!!');
+  }
+};
 
 
 
-  } // for i
+
+// +board2D[i+1][i+1]+board2D[i+2][i+2]
+// console.log('WIN FOR X!!!!');
+// console.log(`diagonal is ${diagonal}`);
 
 
 
 
-  //check diagonal
-  // for(i=0; i<n; i++) {
-  //   if(board2D[i][i]==="X"){
-  //     numX++
-  //     console.log(numX);
-  //   } else if(board2D[i][i]==="O"){
-  //     numO++
-  //     console.log(numO);
+
+
+
+
+
+
+
+  //   for (let j=0; j<n; j++) {
+  //     // set a variable to store coordinate
+  //     const rowSquare = board2D[i][j];
+  //
+  //
+  //     // Initially, if (board2D[i][j]==='X') else if (board2D[i][j]==='O') -> count.X.rows ++ or count.O.rows ++
+  //     // make it shorten, if (rowsquare ==='X') else if (rowsquare ==='O') -> count.X.rows ++ or count.O.rows ++
+  //     // make it shorten, if (rowsquare !== null) - > count.[rowsquare].rows ++
+  //     // make it shorten, if (rowsquare === true) - > count.[rowsquare].rows ++
+  //     // make it shorten, see below:
+  //     if( rowSquare ){
+  //       count[ rowSquare ].rows++;
+  //       console.log(`Found ${rowSquare} at ${i},${j}, count=${count[ rowSquare ].rows}`);
+  //       console.log(count);
+  //     }
+  //
+  //
+  //     // check columns
+  //     const colSquare = board2D[j][i];
+  //     console.log(colSquare);
+  //     if ( colSquare ) {
+  //       count[ colSquare ].cols++
+  //       // console.log(count[ colSquare ].cols);
+  //       // if (count[ colSquare ].cols===3) {
+  //       //   console.log(`${colSquare}: ${count[ colSquare ].cols}, col win.`);
+  //       //   return true;
+  //       // }
+  //     }
+  //   } // for j
+  //
+  //   // end of row check
+  //   if (count.X.rows===3) {
+  //     console.log(`X wins row ${i}`);
+  //     return true;
+  //   } else if (count.O.rows===3) {
+  //     console.log(`O wins row ${i}`);
+  //     return true;
+  //   } else {
+  //     count.X.rows = 0;
+  //     count.O.rows = 0;
+  //   }
+  //
+  //   // end of col check
+  //   if (count.X.cols===3) {
+  //     console.log(`X wins col ${i}`);
+  //     return true;
+  //   } else if (count.O.cols===3) {
+  //     console.log(`O wins col ${i}`);
+  //     return true;
+  //   } else {
+  //     count.X.cols = 0;
+  //     count.O.cols = 0;
+  //   }
+  //
+  //
+  //
+  // } // for i
+  //
+  //
+  //
+  //
+  // //check diagonal
+  // // for(i=0; i<n; i++) {
+  // //   if(board2D[i][i]==="X"){
+  // //     numX++
+  // //     console.log(numX);
+  // //   } else if(board2D[i][i]==="O"){
+  // //     numO++
+  // //     console.log(numO);
+  // //   }
+  // // }
+  //
+  //
+  // // check diagonal
+  // for (i=0; i<n; i++) {
+  //   const diagSquare = board2D[i][i];
+  //   console.log(diagSquare);
+  //   if (diagSquare) {
+  //     count[ diagSquare ].diag++
+  //     // console.log(count[ diagSquare ].diag);
+  //     if (count[ diagSquare ].diag===3) {
+  //       console.log(`${diagSquare}: ${count[ diagSquare ].diag}, diag win.`);
+  //       return true;
+  //     }
   //   }
   // }
-
-
-  // check diagonal
-  for (i=0; i<n; i++) {
-    const diagSquare = board2D[i][i];
-    console.log(diagSquare);
-    if (diagSquare) {
-      count[ diagSquare ].diag++
-      // console.log(count[ diagSquare ].diag);
-      if (count[ diagSquare ].diag===3) {
-        console.log(`${diagSquare}: ${count[ diagSquare ].diag}, diag win.`);
-        return true;
-      }
-    }
-  }
-
-  // check antiDiagonal
-  // for (let i=0; i<n; i++) {
-  //     if (board2D[i][n-1-i]==='X') {
-  //       numX++
-  //       console.log(numX);
-  //     } else if (board2D[i][n-1-i]==='O'){
-  //       numO++
-  //       console.log(numO);
+  //
+  // // check antiDiagonal
+  // // for (let i=0; i<n; i++) {
+  // //     if (board2D[i][n-1-i]==='X') {
+  // //       numX++
+  // //       console.log(numX);
+  // //     } else if (board2D[i][n-1-i]==='O'){
+  // //       numO++
+  // //       console.log(numO);
+  // //     }
+  // // } // for i
+  //
+  //
+  // // check antiDiagonal
+  // // replationship between i and j: i+j = n-1;
+  // for (i=0; i<n; i++) {
+  //   const antiDiagSquare = board2D[i][n-1-i];
+  //   console.log(antiDiagSquare);
+  //   if (antiDiagSquare) {
+  //     count[ antiDiagSquare ].antidiag++
+  //     // console.log(count[ antiDiagSquare ].antidiag);
+  //     if (count[ antiDiagSquare ].antidiag ===3) {
+  //       console.log(`${antiDiagSquare}: ${count[ antiDiagSquare ].antidiag}, antidiag win.`);
+  //       return true;
   //     }
-  // } // for i
-
-
-  // check antiDiagonal
-  // replationship between i and j: i+j = n-1;
-  for (i=0; i<n; i++) {
-    const antiDiagSquare = board2D[i][n-1-i];
-    console.log(antiDiagSquare);
-    if (antiDiagSquare) {
-      count[ antiDiagSquare ].antidiag++
-      // console.log(count[ antiDiagSquare ].antidiag);
-      if (count[ antiDiagSquare ].antidiag ===3) {
-        console.log(`${antiDiagSquare}: ${count[ antiDiagSquare ].antidiag}, antidiag win.`);
-        return true;
-      }
-    }
-  }
-
-  // debugger;
-
-
-  // if(count.X.rows===3 || count.X.cols===3 || count.X.diag===3 || count.X.antidiag===3){
-  //   console.log("winner is X.");
-  //   return 'X';
+  //   }
   // }
   //
-  // if(count.O.rows===3 || count.O.cols===3 || count.O.diag===3 || count.O.antidiag===3) {
-  //   console.log("winner is O.");
-  //   return 'O';
-  // }
+  // // debugger;
+  //
+  //
+  // // if(count.X.rows===3 || count.X.cols===3 || count.X.diag===3 || count.X.antidiag===3){
+  // //   console.log("winner is X.");
+  // //   return 'X';
+  // // }
+  // //
+  // // if(count.O.rows===3 || count.O.cols===3 || count.O.diag===3 || count.O.antidiag===3) {
+  // //   console.log("winner is O.");
+  // //   return 'O';
+  // // }
+  //
+  // // if (count[rowSquare].rows===3 ||
+  // //     count[colSquare].cols===3 ||
+  // //     count[diagSquare].diag===3 ||
+  // //     count[antiDiagSquare].antidiag===3) {
+  // //       return
+  // //     }
+  //
+  // // if (numX===3) {
+  // //   console.log("Winner is X.")
+  // // } else if (numO===3) {
+  // //   console.log("Winner is O.")
+  // // } else if (turns===8) {
+  // //   console.log('draw.');
+  // // }
+  // return false;
 
-  // if (count[rowSquare].rows===3 ||
-  //     count[colSquare].cols===3 ||
-  //     count[diagSquare].diag===3 ||
-  //     count[antiDiagSquare].antidiag===3) {
-  //       return
-  //     }
-
-  // if (numX===3) {
-  //   console.log("Winner is X.")
-  // } else if (numO===3) {
-  //   console.log("Winner is O.")
-  // } else if (turns===8) {
-  //   console.log('draw.');
-  // }
-  return false;
-};
 
 
 
@@ -297,12 +331,5 @@ $(document).ready(function () {
     };
 
     winner(board2D);
-
-
   })
-
-
-
-
-
 });
