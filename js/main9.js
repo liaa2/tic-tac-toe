@@ -150,7 +150,7 @@ $(document).ready(function () {
       let r = randRange(255);
       let g = randRange(255);
       let b = randRange(255);
-      let color = `rgba(${r},${g},${b},0.7)`;
+      let color = `rgba(${r},${g},${b},0.5)`;
       $(this).css("backgroundColor", color);
     })
 
@@ -170,7 +170,7 @@ $(document).ready(function () {
     console.log('changed!', $(this).val()); //or this.value <--- vanilla JS
     n = parseInt(this.value);
     createGrid(n);
-    $("h1, #player1, #player2, #chooseSize").css("color","black");
+    $("h1, #chooseSize").css("color","black");
     $("body").css("backgroundColor","white");
   });
 
@@ -206,7 +206,7 @@ $(document).ready(function () {
 
     if ( isWinner ) {
       winTrigger(isWinner);
-    } else if (turns===(n*n-1)) { //else if winner condition doesnt meet and already played 9 times
+    } else if (turns===(n*n-1)) { //else if winner condition doesn't meet and no more empty space
       drawTrigger();
     }
 
