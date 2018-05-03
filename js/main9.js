@@ -52,8 +52,6 @@ const winner = function (board2D, player) {
       return playerSymbol;
     }
   };
-  // console.log(diag);
-  // console.log(antiDiag);
 
   // check diag win & anti-diagonal win
   if (diag.join('') === player || antiDiag.join('') === player) {
@@ -72,7 +70,6 @@ const winner = function (board2D, player) {
 
 // ====================JQuery code======================
 $(document).ready(function () {
-  // console.log(board2D);
 
   console.log('JQuery is ready - main9.js');
 
@@ -137,21 +134,17 @@ $(document).ready(function () {
 
   // delegate click handler to whole document - it will check for '.checkbox' on every click
   $(document).on("click", ".checkbox",  function() {
-    // console.log('in here');
+
     //set variables for indices
     const x = $(this).attr("x")
     const y = $(this).attr("y")
-    // debugger;
-    // console.log(board2D[x][y]);
 
-    // if( board2D[x][y] ) is equivalents to if( board2D[x][y]===true ) which is also equivalents to if( board2D[x][y] !== null)
     if( board2D[x][y] ) {
       console.log("Invalid click.")
       return;
     }
-    // debugger;
 
-    // let currentPlayer "X" or "O" replace board2D
+    // let currentPlayer "X" or "O" replace board2D according to indices
     board2D[x][y] = currentPlayer;
 
     // link currentPlayer "X" or "O" to the webpage
@@ -167,8 +160,7 @@ $(document).ready(function () {
       drawTrigger();
     }
 
-    //switch players by increment turns
-    // the initial player is "X", but turns stays zero when the below function starts to work, put line 173 to "O" so the players would switch. Otherwise it would be like: initial click "X" -> click again "X" -> click again "O"
+    //Incrementing turns, switch players via odd or even turns
     if (turns%2 === 0) {
       currentPlayer = "O";
     } else {
@@ -193,12 +185,11 @@ $(document).ready(function () {
     $(".checkbox").text("");
   };
 
-  //increment scores for each player based on winner and pop up a message for user to choose
+  //incrementing scores for each player based on winner and pop up a message for user to choose
   //winnerSymbol is either "X" or "O"
   const winTrigger = function ( winnerSymbol ) {
     if ( winnerSymbol === "X" ){
       playerXScore++
-      // console.log(playerXScore);
       $("#player1 > div").text(playerXScore)
     } else {
       playerOScore++
