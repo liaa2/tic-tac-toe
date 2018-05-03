@@ -161,9 +161,6 @@ $(document).ready(function(){
 
     // console.log(board);
 
-    const isWinner = winner( currentPlayer );
-
-
     const countScore = function() {
       if (currentPlayer === 'X') {
         playerXScore++;
@@ -182,6 +179,8 @@ $(document).ready(function(){
       // $('#yesButton, #noButton').css({'background': 'inherit', 'fontSize': '50px','fontFamily': 'Black Han Sans'})
       $('#message').show('slow');
     };
+    
+    const isWinner = winner( currentPlayer );
 
     if( isWinner ){
       countScore();
