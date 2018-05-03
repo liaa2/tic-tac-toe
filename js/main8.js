@@ -225,7 +225,8 @@ $(document).ready(function () {
     })
 
 
-    let containerWidth = $("#container").width() - 20;
+    // let containerWidth = $("#container").width() - 20;
+    let containerWidth = $("#container").width();
     let heightWidth = parseInt(containerWidth/n)-20;
     let fontSize = parseInt(heightWidth/2);
 
@@ -278,7 +279,7 @@ $(document).ready(function () {
 
     if ( isWinner ) {
       winTrigger(isWinner);
-    } else if (turns===8) { //else if winner condition doesnt meet and already played 9 times
+    } else if (turns===(n*n-1)) { //else if winner condition doesnt meet and already played 9 times
       drawTrigger();
     }
 
@@ -291,6 +292,8 @@ $(document).ready(function () {
     turns++;
     console.log(`AFTER: turns=${turns}, currentPlayer=${currentPlayer}`);
 
+    // AI Player Turn function here!
+    // then back to human turns
 
   }); // end checkbox click handler
 
@@ -344,10 +347,4 @@ $(document).ready(function () {
       window.close();
     }, 1500);
   })
-
-
-
-
-
-
 });
