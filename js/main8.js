@@ -50,11 +50,7 @@
 // //
 
 
-let board2D = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
+let board2D = [];
 
 let n = 3;
 let currentPlayer = "X";
@@ -68,6 +64,7 @@ const winner = function (board2D, player) {
   let diag = [];
   let antiDiag = [];
 
+  const playerSymbol = player;
   player = player.repeat(n);
 
   // check rows
@@ -76,7 +73,7 @@ const winner = function (board2D, player) {
     // check row win
     if ( board2D[i].join('') === player  ){
       console.log(`row WIN FOR ${player}!!!!`);
-      return player;
+      return playerSymbol;
     }
 
     for (let j = 0; j < n; j++) {
@@ -97,7 +94,7 @@ const winner = function (board2D, player) {
     // console.log(player );
     if (columns.join('') === player ) {
       console.log(`col WIN FOR ${player}!!!!`);
-      return player;
+      return playerSymbol;
     }
     // console.log(columns);
   }
@@ -107,7 +104,7 @@ const winner = function (board2D, player) {
   // check diag win & anti-diagonal win
   if (diag.join('') === player || antiDiag.join('') === player) {
     console.log(`diag WIN FOR ${player}!!!!`);
-    return player;
+    return playerSymbol;
   }
 
   return false;  // this means no one has won on this move
@@ -197,16 +194,36 @@ $(document).ready(function () {
     // empty my table
     $("table").empty();
 
+    // board2D = new Array(n).fill( new Array(n).fill(null) );
+
+    // initialise the board array
+    for (let i = 0; i < n; i++) {
+      board2D[i] = [];
+      for (let j = 0; j < n; j++) {
+        board2D[i][j]= null;
+      }
+    }
+
     //create more tables
     for (let i = 0; i < n; i++) {
       let $tr = $('<tr></tr>');
       console.log(`${$tr}`);
       for (var j = 0; j < n; j++) {
-        $tr.append(`<td x="${i}" y="${j}">&nbsp;</td>`)
+        $tr.append(`<td class="checkbox" x="${i}" y="${j}">&nbsp;</td>`)
       }
       $("table").append($tr);
     }
-    $("td").addClass("checkbox")
+
+    // $("td").addClass("checkbox");
+
+    $(".checkbox").each(function() {
+      let r = randRange(255);
+      let g = randRange(255);
+      let b = randRange(255);
+      let color = `rgba(${r},${g},${b},0.7)`;
+      $(this).css("backgroundColor", color);
+    })
+
 
     let containerWidth = $("#container").width() - 20;
     let heightWidth = parseInt(containerWidth/n)-20;
@@ -219,16 +236,18 @@ $(document).ready(function () {
     $("td").css({ "width": heightWidth })
     $("td").css("fontSize", fontSize);
     // $("td").css({"width": '100', "height": height})
-  };
+
+  }; // end createGrid
 
   // create event listener for n
   $('#dropDown').on('change', function () {
     console.log('changed!', $(this).val()); //or this.value <--- vanilla JS
-    n = this.value;
+    n = parseInt(this.value);
     createGrid(n);
   });
 
-  $(".checkbox").on("click", function() {
+  // delegate click handler to whole document - it will check for '.checkbox' on every click
+  $(document).on("click", ".checkbox",  function() {
     console.log('in here');
     //set variables for indices
     const x = $(this).attr("x")
@@ -255,7 +274,6 @@ $(document).ready(function () {
     //switch players by increment turns
     // the initial player is "O", but turns stays zero when the below function starts to work, put line 156 to "X" so the players would switch. Otherwise it would be like: initial click "O" -> click again "O" -> click again "X"
 
-
     const isWinner = winner(board2D, currentPlayer);
 
     if ( isWinner ) {
@@ -264,19 +282,22 @@ $(document).ready(function () {
       drawTrigger();
     }
 
-    if (turns%2 !== 0) {
+    console.log(`before: turns=${turns}, currentPlayer=${currentPlayer}`);
+    if (turns%2 === 0) {
       currentPlayer = "O";
     } else {
       currentPlayer = "X";
     };
     turns++;
+    console.log(`AFTER: turns=${turns}, currentPlayer=${currentPlayer}`);
+
 
   }); // end checkbox click handler
 
 
   const resetGame = function () {
     $("#message, #draw").hide();
-    currentPlayer = "O";
+    currentPlayer = "X";
     turns = 0;
     board2D = [
       [null, null, null],
@@ -325,14 +346,6 @@ $(document).ready(function () {
   })
 
 
-
-  $(".checkbox").each(function() {
-    let r = randRange(255);
-    let g = randRange(255);
-    let b = randRange(255);
-    let color = `rgba(${r},${g},${b},0.7)`;
-    $(this).css("backgroundColor", color);
-  })
 
 
 
