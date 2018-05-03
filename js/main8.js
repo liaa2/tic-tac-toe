@@ -63,10 +63,6 @@ let playerXScore = 0;
 let playerOScore = 0;
 
 
-// let winMatch = previousPlayer.repeat(n)
-// console.log(currentPlayer.repeat(n));
-
-
 const winner = function (board2D, player) {
 
   let diag = [];
@@ -108,15 +104,9 @@ const winner = function (board2D, player) {
   // console.log(diag);
   // console.log(antiDiag);
 
-  // check diag win
-  if (diag.join('') === player ) {
+  // check diag win & anti-diagonal win
+  if (diag.join('') === player || antiDiag.join('') === player) {
     console.log(`diag WIN FOR ${player}!!!!`);
-    return player;
-  }
-
-  //check anti-diagonal win
-  if (antiDiag.join('') === player ) {
-    console.log(`antidiag WIN FOR ${player}!!!!`);
     return player;
   }
 
@@ -198,11 +188,48 @@ const winner = function (board2D) {
 
 // ====================JQuery code======================
 $(document).ready(function () {
-  console.log(board2D);
+  // console.log(board2D);
 
   console.log('JQuery is ready - main8.js');
 
-  $(".checkbox").on("click", function(){
+  const createGrid = function(n) {
+
+    // empty my table
+    $("table").empty();
+
+    //create more tables
+    for (let i = 0; i < n; i++) {
+      let $tr = $('<tr></tr>');
+      console.log(`${$tr}`);
+      for (var j = 0; j < n; j++) {
+        $tr.append(`<td x="${i}" y="${j}">&nbsp;</td>`)
+      }
+      $("table").append($tr);
+    }
+    $("td").addClass("checkbox")
+
+    let containerWidth = $("#container").width() - 20;
+    let heightWidth = parseInt(containerWidth/n)-20;
+    let fontSize = parseInt(heightWidth/2);
+
+    console.log(heightWidth);
+    $('tr').css({ "height": heightWidth });
+    // let height = parseInt(containerWidth/n)-20;
+    // $("td").css({ "width": heightWidth, "height": heightWidth })
+    $("td").css({ "width": heightWidth })
+    $("td").css("fontSize", fontSize);
+    // $("td").css({"width": '100', "height": height})
+  };
+
+  // create event listener for n
+  $('#dropDown').on('change', function () {
+    console.log('changed!', $(this).val()); //or this.value <--- vanilla JS
+    n = this.value;
+    createGrid(n);
+  });
+
+  $(".checkbox").on("click", function() {
+    console.log('in here');
     //set variables for indices
     const x = $(this).attr("x")
     const y = $(this).attr("y")
@@ -230,6 +257,7 @@ $(document).ready(function () {
 
 
     const isWinner = winner(board2D, currentPlayer);
+
     if ( isWinner ) {
       winTrigger(isWinner);
     } else if (turns===8) { //else if winner condition doesnt meet and already played 9 times
@@ -237,9 +265,9 @@ $(document).ready(function () {
     }
 
     if (turns%2 !== 0) {
-      currentPlayer = "X";
-    } else {
       currentPlayer = "O";
+    } else {
+      currentPlayer = "X";
     };
     turns++;
 
@@ -247,6 +275,7 @@ $(document).ready(function () {
 
 
   const resetGame = function () {
+    $("#message, #draw").hide();
     currentPlayer = "O";
     turns = 0;
     board2D = [
@@ -256,6 +285,7 @@ $(document).ready(function () {
     ];
     $(".checkbox").text("");
   };
+
 
   const winTrigger = function ( winnerSymbol ) {
     if ( winnerSymbol === "X" ){
@@ -281,13 +311,6 @@ $(document).ready(function () {
     return parseInt(Math.random()*max);
   }
 
-  $(".checkbox").each(function() {
-    let r = randRange(255);
-    let g = randRange(255);
-    let b = randRange(255);
-    let color = `rgba(${r},${g},${b},0.7)`;
-    $(this).css("backgroundColor", color);
-  })
 
   $(".yesButton").on("click", function() {
     console.log('yes!!');
@@ -301,27 +324,17 @@ $(document).ready(function () {
     }, 1500);
   })
 
-  $('#dropDown').on('change', function () {
-    console.log('changed!', this.value, $(this).val()  );
-    n = this.value;
-  });
-
-  // create event listener for n
-  // n = $("option").attr(".....")
 
 
+  $(".checkbox").each(function() {
+    let r = randRange(255);
+    let g = randRange(255);
+    let b = randRange(255);
+    let color = `rgba(${r},${g},${b},0.7)`;
+    $(this).css("backgroundColor", color);
+  })
 
-  //create more tables
-  // const createGrid = function(n) {
-  //
-  //   for (let i = 0; i < n; i++) {
-  //     let $tr = $('<tr></tr>');
-  //     for (var j = 0; j < n; j++) {
-  //       $tr.append(`<td class="checkbox" x="${i}" y="${j}">&nbsp;</td>`)
-  //     }
-  //   }
-  //   $("table").append($tr);
-  // };
+
 
 
 });
