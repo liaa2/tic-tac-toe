@@ -65,6 +65,8 @@ h1, #player1, #player2, #chooseSize {
   font-size: 50px;
   font-family: 'Black Han Sans', sans-serif;
   margin-bottom: 0;
+  padding: 10px;
+  border: 1px solid gray;
 }
 
 #container {
@@ -100,8 +102,8 @@ td {
   display: none;
   position: absolute;
   width: 50%;
-  height: 60%;
-  top: 40vh;
+  /* height: 60%; */
+  top: 30vh;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -109,4 +111,5 @@ td {
   font-family: 'Black Han Sans', sans-serif;
   text-align: center;
   font-size: 100px;
+  padding: 20px;
 }
