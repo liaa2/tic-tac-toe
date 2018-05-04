@@ -23,4 +23,4 @@
 
 ### Wishlist
  - AI player mode with different difficulty levels.
- - Make game rules harder i.e. To win the game, players need to get n X's or O's in a row on a m x m board.
+ - Make game rules harder (i.e., to win the game, players need to get n X's or O's in a row on a m x m board).
