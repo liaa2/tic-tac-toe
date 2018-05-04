@@ -71,7 +71,7 @@ const winner = function (board2D, player) {
 // ====================JQuery code======================
 $(document).ready(function () {
 
-  console.log('JQuery is ready - main9.js');
+  console.log('JQuery is ready - main.js');
 
   //function to create grids based on n dimensions
   const createGrid = function(n) {
