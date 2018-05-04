@@ -3,8 +3,15 @@
 let board2D = [];
 let n = 3;
 let currentPlayer = "X";
+// use turns to change currentPlayer for each move
 let turns = 0;
+//use gameCount to swap which player starts for the next round
+let gameCount = 0;
+//use moveCount to check if game is over
+let moveCount = 0;
+//set up initial score for player X
 let playerXScore = 0;
+// set up inital score for player O
 let playerOScore = 0;
 
 //check win conditions:
@@ -130,6 +137,7 @@ $(document).ready(function () {
     createGrid(n);
     $("h1, #chooseSize").css("color","black");
     $("body").css("backgroundColor","white");
+    $('.checkbox').css('border', `${12-n}px solid black`);
   });
 
   // delegate click handler to whole document - it will check for '.checkbox' on every click
@@ -156,25 +164,33 @@ $(document).ready(function () {
     //if there is a winner, trigger a function after win, otherwise trigger function after draw
     if ( isWinner ) {
       winTrigger(isWinner);
-    } else if (turns===(n*n-1)) { //else if no winner and no more empty cells
+    } else if (moveCount===(n*n-1)) { //else if no winner and no more empty cells
       drawTrigger();
     }
 
-    //Incrementing turns, switch players via odd or even turns
-    if (turns%2 === 0) {
-      currentPlayer = "O";
-    } else {
-      currentPlayer = "X";
-    };
-    turns++;
+
+    turns = 1 - turns;   // switch turns between 0 and 1
+    currentPlayer = turns ? 'O' : 'X'; // if turns is 1, currentPlayer is "O", vice versa
+
+    moveCount++;
   }); // end checkbox click handler
 
   //reset the game after each round
   //reset turns, current player, empty the board and clear the symbols "X" and "O" from the webpage
   const resetGame = function () {
     $("#message, #draw").hide();
-    currentPlayer = "X";
-    turns = 0;
+
+    gameCount++;
+    //switch players
+    if (gameCount%2!==0) {
+      currentPlayer = "O";
+      turns = 1;
+    } else {
+      currentPlayer = "X";
+      turns = 0;
+    }
+
+    moveCount = 0;
     board2D = [];
     for (let i = 0; i < n; i++) {
       board2D[i] = [];
