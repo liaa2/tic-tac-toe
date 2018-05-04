@@ -147,6 +147,7 @@ $(document).ready(function () {
     const x = $(this).attr("x");
     const y = $(this).attr("y");
 
+    //if spot board2D[x][y] is not null i.e. aleady has symbol in it, ignore the click
     if( board2D[x][y] ) {
       return;
     };
@@ -161,9 +162,10 @@ $(document).ready(function () {
     const isWinner = winner(board2D, currentPlayer);
 
     //if there is a winner, trigger a function after win, otherwise trigger function after draw
+    //winTrigger and drawTrigger refer to line 208 and 222
     if ( isWinner ) {
       winTrigger(isWinner);
-    } else if (moveCount===(n*n-1)) { //else if no winner and no more empty cells
+    } else if (moveCount===(n*n-1)) { //else if no winner and no more empty spot
       drawTrigger();
     };
 
@@ -171,16 +173,15 @@ $(document).ready(function () {
     turns = 1 - turns;   // switch turns between 0 and 1
     currentPlayer = turns ? 'O' : 'X'; // if turns is 1, currentPlayer is "O", vice versa
 
-    moveCount++;
+    moveCount++; //storing and incrementing the moves
   }); // end checkbox click handler
 
   //reset the game after each round
-  //reset turns, current player, empty the board and clear the symbols "X" and "O" from the webpage
   const resetGame = function () {
     $("#message, #draw").hide();
-
+    //no need to reset the game rounds as the whole game is still continuing, need to decide who is the next player
     gameCount++;
-    //switch players
+    //switch current player for the next round
     if (gameCount%2!==0) {
       currentPlayer = "O";
       turns = 1;
@@ -188,8 +189,9 @@ $(document).ready(function () {
       currentPlayer = "X";
       turns = 0;
     };
-
+    //reset moves to 0
     moveCount = 0;
+    //reset board according to n
     board2D = [];
     for (let i = 0; i < n; i++) {
       board2D[i] = [];
@@ -197,6 +199,7 @@ $(document).ready(function () {
         board2D[i][j]= null;
       }
     }
+    // clear the symbols "X" and "O" from the webpage
     $(".checkbox").text("");
   };
 
@@ -221,18 +224,18 @@ $(document).ready(function () {
     $("#message").show("slow");
   };
 
+  //"yes" and "no" button are nested inside "message" and "draw" message pop up
   //after click the "yes" button, reset the game
   $(".yesButton").on("click", function() {
     console.log('yes!!');
     resetGame();
   });
 
-  //after click the "no" button, update the message and close the window
+  //after click the "no" button, update the message and redirect the page
   $(".noButton").on("click", function(){
     $("#message > div, #draw > div").html("Alright, see you next time!");
     setTimeout(function () {
       console.log("window closing");
-      // window.close();
       window.location.href = "https://www.google.com/";
     }, 1500);
   })
