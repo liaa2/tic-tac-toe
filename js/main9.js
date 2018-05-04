@@ -232,7 +232,8 @@ $(document).ready(function () {
     $("#message > div, #draw > div").html("Alright, see you next time!");
     setTimeout(function () {
       console.log("window closing");
-      window.close();
+      // window.close();
+      window.location.href = "https://www.google.com/";
     }, 1500);
   })
 });
