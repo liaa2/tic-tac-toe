@@ -5,7 +5,7 @@
  - When the game starts, players alternate clicking on an available spot to claim it with symbol "X" or "O". When one player wins or the board contains no more available spots, a message would pop up for user to play again or exit the game. The "play again" action would clear the board and restarts the game. The "exit the game" action would close the window.
 
 ### Link to live game
-Click here to play [GitHub page](https://liaa2.github.io/tic-tac-toe/)
+ - Click here to play [GitHub page](https://liaa2.github.io/tic-tac-toe/)
 
 ### Instructions
  1. Select your preferred board size first. The corresponding board would appear once you've selected it.
@@ -23,4 +23,4 @@ Click here to play [GitHub page](https://liaa2.github.io/tic-tac-toe/)
 
 ### Wishlist
  - AI player mode with different difficulty levels.
- - Make the game rules harder i.e. allow players to get n X's or O's in a row on a m x m board.
+ - Make game rules harder i.e. To win the game, players need to get n X's or O's in a row on a m x m board.
