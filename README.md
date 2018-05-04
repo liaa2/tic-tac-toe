@@ -14,7 +14,7 @@
 
 ### Features
  - Counting scores for each player.
- - board size changes according to player's selections.
+ - Flexible board size according to player's selection.
  - Options to replay the game or close the window via pop up message.
  - Random colour display for each spot in the board.
 
