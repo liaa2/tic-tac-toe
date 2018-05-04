@@ -16,7 +16,7 @@ let playerOScore = 0;
 
 //check win conditions:
 //set current player (X or O) and board size as arguments
-//current player refer to line 172 and board size (n) refer to line 130
+//current player refers to line 185 and board size (n) refers to line 134
 const winner = function (board2D, player) {
 
   //set up inital diagonal and anti-diagonal arrays
