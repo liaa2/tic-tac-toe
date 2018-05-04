@@ -104,7 +104,7 @@ $(document).ready(function () {
       $("table").append($tr);
     };
 
-    //function to get random numbers for colors on line 109
+    //function to get random numbers for colors on line 113
     const randRange = function (max) {
       return parseInt(Math.random()*max);
     };
@@ -118,7 +118,7 @@ $(document).ready(function () {
       $(this).css("backgroundColor", color);
     });
 
-    //calculate each cell's height & width, minus extra 20px as they are sizes for borders (10px on each side)
+    //calculate each cell's height & width, minus 20px for extra space
     //calculate font size based on cell's size to prevent overflow
     let containerWidth = $("#container").width();
     let heightWidth = parseInt(containerWidth/n)-20;
