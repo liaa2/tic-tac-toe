@@ -231,6 +231,7 @@ $(document).ready(function () {
   $(".noButton").on("click", function(){
     $("#message > div, #draw > div").html("Alright, see you next time!");
     setTimeout(function () {
+      console.log("window closing");
       window.close();
     }, 1500);
   })
