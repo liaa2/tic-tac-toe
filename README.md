@@ -9,7 +9,7 @@
 
 ### Instructions
  1. Select your preferred board size first. The corresponding board would appear once you've selected it.
- 2. To win the game, player needs to get 3 X's or 3 O's in a row, either vertically, horizontally, or diagonally regardless of board sizes.
+ 2. To win the game, player needs to get n X's or n O's in a row, either vertically, horizontally, or diagonally for n x n board size.
  3. Switch turns between two Players after each round.
 
 ### Features
