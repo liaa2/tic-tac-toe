@@ -1,6 +1,9 @@
 # Tic-Tac-Toe game
 ## Overview
  - This is a two player game, board size can be 3 x 3, 5 x 5, 7 x 7, 9 x 9 or more (optional if required).
+ - 
+
+#
 
 # Instructions
  - Select your preferred board size first. The corresponding board would appear once you've selected it.
@@ -18,5 +21,3 @@
 
 # Wishlist
  - [ ] AI player mode
-
- 
