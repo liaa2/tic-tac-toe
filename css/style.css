@@ -18,11 +18,16 @@ h1 {
   margin: 40px auto 20px;
 }
 
-#chooseSize, select {
+.choicesbox {
+  display: inline-block;
+  margin:0 30px;
+}
+
+#choices, select {
   font-size: 20px !important;
 }
 
-#dropDown {
+.dropDown {
   margin-bottom: 0;
 }
 
@@ -30,7 +35,7 @@ h1 {
   color: black !important;
 }
 
-h1, #player1, #player2, #chooseSize {
+h1, #player1, #player2, #choices {
   font-family: 'Black Han Sans', sans-serif;
   font-size: 50px;
   color: white;

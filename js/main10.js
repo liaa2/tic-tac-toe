@@ -14,6 +14,15 @@ let playerXScore = 0;
 // set up inital score for player O
 let playerOScore = 0;
 
+
+//AI player mode initial set up
+let aiCount = 0;
+//global variable to trigger ai on
+let aiMode = false;
+
+
+
+
 //check win conditions:
 //set current player (X or O) and board size as arguments
 //current player refers to line 172 and board size (n) refers to line 83
@@ -23,10 +32,13 @@ const winner = function (board2D, player) {
   let diag = [];
   let antiDiag = [];
 
+
+
   const playerSymbol = player;
   //The symbols on one of the directions have to be the same in order to win the game
   //Use repeat() to concatenate string together
   player = player.repeat(n);
+  // debugger;
 
   // iterate over rows
   for (let i = 0; i < n; i++) {
@@ -70,6 +82,82 @@ const winner = function (board2D, player) {
 };
 
 
+
+//switch players between AI and user
+
+const aiMove = function (board2D, currentPlayer, n) {
+  console.log('ai game starts');
+  // switch turns between 0 and 1
+  turns = 1 - turns;
+  currentPlayer = turns ? 'O' : 'X';
+  console.log(`currentPlayer: ${currentPlayer}`);
+
+  // console.log(`aiCount: ${aiCount}`);
+
+  // if(aiCount%2 === 0){
+  //   winner(board2D, currentPlayer);
+  // } else {
+  //   console.log('ai is working');
+
+  // isWinner = winner(board2D, currentPlayer);
+  // moveCount++
+  //
+  // //if there is a winner, trigger a function after win, otherwise trigger function after draw
+  // //winTrigger and drawTrigger refer to line 208 and 222
+  // if ( isWinner ) {
+  //   winTrigger(isWinner);
+  //   debugger;
+  // } else if (moveCount===(n*n-1)) { //else if no winner and no more empty spot
+  //   drawTrigger();
+  // } else {
+    aiTurn(board2D, currentPlayer);// ai's turn
+  // }
+  console.log(` current turn: ${turns}`);
+};
+
+
+// const aiMove = function (board2D, currentPlayer, n) {
+//   console.log('ai game');
+//   // aiCount = 1 - aiCount;
+//   // switch turns between 0 and 1
+//
+//
+//   aiCount = 1 - aiCount;
+//   currentPlayer = aiCount ? 'O' : 'X';
+//   console.log(currentPlayer);
+//   if(aiCount%2 === 0){
+//     winner(board2D, currentPlayer);
+//   } else {
+//     console.log('ai is working');
+//     aiTurn(board2D, currentPlayer);// ai's turn
+//   }
+//   console.log(`aiCount: ${aiCount}`);
+// };
+
+
+
+//AI decides positions on the board and avoids overlap
+const aiTurn = function (board2D, currentPlayer) {
+  // check for empty squares
+  x = parseInt(Math.random()*n)
+  y = parseInt(Math.random()*n)
+  // console.log(`x:${x},y:${y}`);
+  // console.log(board2D[x][y]);
+  // debugger;
+  // console.log(board2D);
+
+  // if ($("td").html()!=="") {
+  //   return;
+  // } else if
+  if (!board2D[x][y]) {
+    board2D[x][y] = currentPlayer;
+    console.log(board2D[x][y]);
+  } else {
+    aiTurn(board2D, currentPlayer);
+  }
+  //update player symbol to webpage
+  $(`td[x = ${x}][y= ${y}]`).html(board2D[x][y]);
+};
 
 
 
@@ -129,12 +217,23 @@ $(document).ready(function () {
     $("td").css("fontSize", fontSize);
   }; // end createGrid
 
+  // drop down list to trigger AI player mode or human only mode
+  $('#dropDown1').on('change', function () {
+    // console.log($(this).val());
+    if ($(this).val() === "AI Player mode: on") {
+       aiMode = true;
+       // console.log(aiMode);
+       return aiMode;
+    }
+  });
+
+
   // create event listener for n (user chooses the number from the drop down list)
-  $('#dropDown').on('change', function () {
+  $('#dropDown2').on('change', function () {
     console.log('changed!', $(this).val());
     n = parseInt(this.value);
     createGrid(n);
-    $("h1, #chooseSize").css("color","black");
+    $("h1, #choices").css("color","black");
     $("body").css("backgroundColor","white");
     $('.checkbox').css('border', `${12-n}px solid black`);
   });
@@ -143,8 +242,8 @@ $(document).ready(function () {
   $(document).on("click", ".checkbox",  function() {
 
     //set variables for indices
-    const x = $(this).attr("x");
-    const y = $(this).attr("y");
+    let x = $(this).attr("x");
+    let y = $(this).attr("y");
 
     //if spot board2D[x][y] is not null i.e. aleady has symbol in it, ignore the click
     if( board2D[x][y] ) {
@@ -157,8 +256,21 @@ $(document).ready(function () {
     // link currentPlayer "X" or "O" to the webpage
     $(this).text(currentPlayer);
 
+    //check if user selected AI mode
+    console.log(`aiMode:${aiMode}`);
 
-    const isWinner = winner(board2D, currentPlayer);
+    if (aiMode) {
+      // aiCount++
+      // console.log(`after current aiCount: ${aiCount}`);
+      aiCount = 1 - aiCount;
+      aiMove(board2D, currentPlayer, n);
+    }
+
+    turns = 1 - turns;   // switch turns between 0 and 1
+    currentPlayer = turns ? 'O' : 'X'; // if turns is 1, currentPlayer is "O", vice versa
+
+
+    let isWinner = winner(board2D, currentPlayer);
 
     //if there is a winner, trigger a function after win, otherwise trigger function after draw
     //winTrigger and drawTrigger refer to line 208 and 222
@@ -168,9 +280,8 @@ $(document).ready(function () {
       drawTrigger();
     };
 
-
-    turns = 1 - turns;   // switch turns between 0 and 1
-    currentPlayer = turns ? 'O' : 'X'; // if turns is 1, currentPlayer is "O", vice versa
+    // aiCount++;
+    // console.log(aiCount);
 
     moveCount++; //storing and incrementing the moves
   }); // end checkbox click handler
@@ -200,6 +311,13 @@ $(document).ready(function () {
     }
     // clear the symbols "X" and "O" from the webpage
     $(".checkbox").text("");
+    console.log($('#dropDown1').val());
+
+    if ($('#dropDown1').val() === "AI Player mode: on") {
+       aiMode = true;
+       console.log(aiMode);
+       // return aiMode;
+    }
   };
 
   //incrementing scores for each player based on winner and pop up a message for user to choose
