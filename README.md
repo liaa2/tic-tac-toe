@@ -4,7 +4,7 @@
  - This is a two player game, board size can be 3 x 3, 5 x 5, 7 x 7 or 9 x 9.
  - The game includes two modes, AI player on or off.
  - AI player off: when the game starts, players alternate clicking on available spots to claim them with symbol "X" or "O". If one player wins or the board contains no more available spots, a message would pop up for user to play again or exit the game. The "play again" action would clear the board and restart the game. The "exit the game" action would redirect the page.
- - Ai player on: user select the spot first. player and AI alternate clicking available spots to claim them with symbol "X" or "O".
+ - Ai player on: Human player is "X", AI player is "O". User selects the spot first for the first round then switch players after each round.
 
 ### Link to live game
  - Please click here to play the game [GitHub page](https://liaa2.github.io/tic-tac-toe/)
